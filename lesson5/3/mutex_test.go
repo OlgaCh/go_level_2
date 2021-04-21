@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math/rand"
 	"sync"
 	"testing"
 )
@@ -55,14 +56,12 @@ func (s *RWSet) Has(i int) bool {
 
 func BenchmarkMutex_90_10(b *testing.B) {
 	var set = NewSet()
-	var count = 0
 
 	b.Run("Mutex 90% write 10% read", func(b *testing.B) {
 		b.SetParallelism(1000)
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				count += 1
-				if count%10 == 0 {
+				if rand.Float32() <= 0.1 {
 					set.Has(1)
 				} else {
 					set.Add(1)
@@ -74,14 +73,12 @@ func BenchmarkMutex_90_10(b *testing.B) {
 
 func BenchmarkRWMutex_90_10(b *testing.B) {
 	var set = NewRWSet()
-	var count = 0
 
 	b.Run("RWMutex 90% write 10% read", func(b *testing.B) {
 		b.SetParallelism(1000)
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				count += 1
-				if count%10 == 0 {
+				if rand.Float32() <= 0.1 {
 					set.Has(1)
 				} else {
 					set.Add(1)
@@ -93,14 +90,12 @@ func BenchmarkRWMutex_90_10(b *testing.B) {
 
 func BenchmarkMutex_50_50(b *testing.B) {
 	var set = NewSet()
-	var count = 0
 
 	b.Run("Mutex 50% write 50% read", func(b *testing.B) {
 		b.SetParallelism(1000)
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				count += 1
-				if count%2 == 0 {
+				if rand.Float32() <= 0.5 {
 					set.Add(1)
 				} else {
 					set.Has(1)
@@ -112,14 +107,12 @@ func BenchmarkMutex_50_50(b *testing.B) {
 
 func BenchmarkRWMutex_50_50(b *testing.B) {
 	var set = NewRWSet()
-	var count = 0
 
 	b.Run("RWMutex 50% write 50% read", func(b *testing.B) {
 		b.SetParallelism(1000)
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				count += 1
-				if count%2 == 0 {
+				if rand.Float32() <= 0.5 {
 					set.Add(1)
 				} else {
 					set.Has(1)
@@ -131,14 +124,12 @@ func BenchmarkRWMutex_50_50(b *testing.B) {
 
 func BenchmarkMutex_10_90(b *testing.B) {
 	var set = NewSet()
-	var count = 0
 
 	b.Run("Mutex 10% write 90% read", func(b *testing.B) {
 		b.SetParallelism(1000)
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				count += 1
-				if count%10 == 0 {
+				if rand.Float32() <= 0.1 {
 					set.Add(1)
 				} else {
 					set.Has(1)
@@ -150,14 +141,12 @@ func BenchmarkMutex_10_90(b *testing.B) {
 
 func BenchmarkRWMutex_10_90(b *testing.B) {
 	var set = NewRWSet()
-	var count = 0
 
 	b.Run("RWMutex 10% write 90% read", func(b *testing.B) {
 		b.SetParallelism(1000)
 		b.RunParallel(func(pb *testing.PB) {
 			for pb.Next() {
-				count += 1
-				if count%10 == 0 {
+				if rand.Float32() <= 0.1 {
 					set.Add(1)
 				} else {
 					set.Has(1)
